@@ -6,21 +6,33 @@ using System.Reflection;
 
 namespace Mimp.SeeSharper.TypeResolver.Provide
 {
-    public class ProvidedTypeResolver : DelegateTypeResolver
+    /// <summary>
+    /// Resolve the types by checking all providing types.
+    /// </summary>
+    public class ProvidingTypeResolver : DelegateTypeResolver
     {
 
 
+        /// <summary>
+        /// All providing types of <see cref="ITypeProvider"/> will be 
+        /// used to resolve the types.
+        /// </summary>
         public ITypeProvider Provider { get; }
 
 
-        public ProvidedTypeResolver(ITypeProvider provider)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ProvidingTypeResolver(ITypeProvider provider)
         {
             Provider = provider ?? throw new ArgumentNullException(nameof(provider));
             ResolveTypesDelegate = ResolveTypesByProvider;
         }
 
 
-        protected IEnumerable<Type> ResolveTypesByProvider(string typeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes, IEnumerable<Type> resolvedTypes)
+        protected IEnumerable<Type> ResolveTypesByProvider(string fullTypeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes, IEnumerable<Type> resolvedTypes)
         {
             var assemblyName = string.IsNullOrWhiteSpace(assembly) ? null : new AssemblyName(assembly);
             if (assemblyName is not null && Provider is IAssemblyTypeProvider provider)

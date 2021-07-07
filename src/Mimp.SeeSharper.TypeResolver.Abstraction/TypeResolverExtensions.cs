@@ -2,12 +2,30 @@
 
 namespace Mimp.SeeSharper.TypeResolver.Abstraction
 {
+    /// <summary>
+    /// Extensions method for <see cref="ITypeResolver"/>.
+    /// </summary>
     public static class TypeResolverExtensions
     {
 
 
-        public static Type ResolveRequired(this ITypeResolver resolver, string typeName)
+        /// <summary>
+        /// Resovle <paramref name="typeName"/> to a single <see cref="Type"/>.
+        /// </summary>
+        /// <param name="resolver"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="TypeResolveException">
+        /// If no or more than one type resolved.
+        /// </exception>
+        public static Type ResolveSingle(this ITypeResolver resolver, string typeName)
         {
+            if (resolver is null)
+                throw new ArgumentNullException(nameof(resolver));
+            if (typeName is null)
+                throw new ArgumentNullException(nameof(typeName));
+
             Type? r = null;
             foreach (var t in resolver.Resolve(typeName))
             {

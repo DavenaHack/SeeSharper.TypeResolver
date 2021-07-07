@@ -2,3 +2,5 @@
 	path = libs/TypeProvider
 	url = https://github.com/DavenaHack/SeeSharper.TypeProvider.git
 	branch = master
+[submodule]
+	update = --init --recursive

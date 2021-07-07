@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace Mimp.SeeSharper.TypeResolver.Abstraction
 {
+    /// <summary>
+    /// Throws if <see cref="ITypeResolver"/> failed to resolve a <see cref="Type"/>.
+    /// </summary>
     [Serializable]
     public class TypeResolveException : Exception
     {
@@ -16,11 +19,12 @@ namespace Mimp.SeeSharper.TypeResolver.Abstraction
         public TypeResolveException(string? message, Exception? inner) 
             : base(message, inner) { }
 
+
         protected TypeResolveException(
             SerializationInfo info,
             StreamingContext context
         ) : base(info, context) { }
-
+        
 
     }
 }

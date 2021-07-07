@@ -7,6 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace Mimp.SeeSharper.TypeResolver
 {
+    /// <summary>
+    /// <see cref="DelegateTypeResolver"/> is a <see cref="ITypeResolver"/> which resolve
+    /// the <see cref="Type"/> with <see cref="Type.GetType(string)"/>. The behavior can override with delegates.
+    /// </summary>
+    /// <seealso cref="ResolveAssembly"/>
+    /// <seealso cref="ResolveNamespace"/>
+    /// <seealso cref="ResolveTypeName"/>
+    /// <seealso cref="ResolveTypes"/>
     public class DelegateTypeResolver : ITypeResolver
     {
 
@@ -34,15 +42,15 @@ namespace Mimp.SeeSharper.TypeResolver
         }
 
 
-        public IEnumerable<Type> Resolve(string typeName)
+        public IEnumerable<Type> Resolve(string type)
         {
-            if (typeName is null)
-                throw new ArgumentNullException(nameof(typeName));
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
 
             static string? groupVal(Group group) => group.Success ? group.Value : null;
-            var match = _TypeRegex.Match(typeName);
+            var match = _TypeRegex.Match(type);
             if (!match.Success)
-                throw new TypeResolveException($"Invalid type name: {typeName}");
+                throw new TypeResolveException($"Invalid type name: {type}");
             var ns = groupVal(match.Groups[1]);
             var tn = groupVal(match.Groups[2]);
             var gn = groupVal(match.Groups[3]);
@@ -53,7 +61,7 @@ namespace Mimp.SeeSharper.TypeResolver
             {
                 var genMatch = _GenericTypesRegex.Match(gn);
                 if (!genMatch.Success)
-                    throw new TypeResolveException($"Invalid type name: {typeName}");
+                    throw new TypeResolveException($"Invalid type name: {type}");
                 var gt = new List<IEnumerable<Type>>();
                 for (int i = 1; i < genMatch.Groups.Count; i++)
                     try
@@ -64,20 +72,20 @@ namespace Mimp.SeeSharper.TypeResolver
                     }
                     catch (Exception ex)
                     {
-                        throw new TypeResolveException($"Invalid type name: {typeName}", ex);
+                        throw new TypeResolveException($"Invalid type name: {type}", ex);
                     }
                 genTypes = gt.ToArray();
             }
 
             if (ResolveAssemblyDelegate is not null)
-                an = ResolveAssemblyDelegate(typeName, an);
+                an = ResolveAssemblyDelegate(type, an);
             if (ResolveNamespaceDelegate is not null)
-                ns = ResolveNamespaceDelegate(typeName, an, ns);
+                ns = ResolveNamespaceDelegate(type, an, ns);
             if (ResolveTypeNameDelegate is not null)
-                tn = ResolveTypeNameDelegate(typeName, an, ns, tn, genTypes);
+                tn = ResolveTypeNameDelegate(type, an, ns, tn, genTypes);
             IEnumerable<Type> ts = Type.EmptyTypes;
             if (ResolveTypesDelegate is not null)
-                ts = ResolveTypesDelegate(typeName, an, ns, tn, genTypes, ts);
+                ts = ResolveTypesDelegate(type, an, ns, tn, genTypes, ts);
 
             return ts;
         }
@@ -100,14 +108,14 @@ namespace Mimp.SeeSharper.TypeResolver
                 throw new ArgumentNullException(nameof(to));
 
             if (string.IsNullOrWhiteSpace(from))
-                AddResolveAssembly((typeName, assembly) =>
+                AddResolveAssembly((fullTypeName, assembly) =>
                 {
                     if (string.IsNullOrWhiteSpace(assembly))
                         return to;
                     return assembly;
                 });
             else
-                AddResolveAssembly((typeName, assembly) =>
+                AddResolveAssembly((fullTypeName, assembly) =>
                 {
                     if (assembly?.StartsWith(from, StringComparison.InvariantCultureIgnoreCase) ?? false)
                         return to + assembly.Substring(from!.Length);
@@ -124,7 +132,7 @@ namespace Mimp.SeeSharper.TypeResolver
             var old = ResolveNamespaceDelegate;
             ResolveNamespaceDelegate = old is null
                 ? resolveNamespace
-                : (typeName, assembly, @namespace) => resolveNamespace(typeName, assembly, old(typeName, assembly, @namespace));
+                : (fullTypeName, assembly, @namespace) => resolveNamespace(fullTypeName, assembly, old(fullTypeName, assembly, @namespace));
         }
 
         public void ChangeNamespace(string? from, string to)
@@ -133,14 +141,14 @@ namespace Mimp.SeeSharper.TypeResolver
                 throw new ArgumentNullException(nameof(to));
 
             if (string.IsNullOrWhiteSpace(from))
-                AddResolveNamespace((typeName, assembly, @namespace) =>
+                AddResolveNamespace((fullTypeName, assembly, @namespace) =>
                 {
                     if (string.IsNullOrWhiteSpace(@namespace))
                         return to;
                     return assembly;
                 });
             else
-                AddResolveNamespace((typeName, assembly, @namespace) =>
+                AddResolveNamespace((fullTypeName, assembly, @namespace) =>
                 {
                     if (@namespace?.StartsWith(from, StringComparison.InvariantCultureIgnoreCase) ?? false)
                         return to + @namespace.Substring(from!.Length);
@@ -157,7 +165,7 @@ namespace Mimp.SeeSharper.TypeResolver
             var old = ResolveTypeNameDelegate;
             ResolveTypeNameDelegate = old is null
                 ? resolveTypeName
-                : (typeName, assembly, @namespace, type, genericTypes) => resolveTypeName(typeName, assembly, @namespace, old(typeName, assembly, @namespace, type, genericTypes), genericTypes);
+                : (fullTypeName, assembly, @namespace, type, genericTypes) => resolveTypeName(fullTypeName, assembly, @namespace, old(fullTypeName, assembly, @namespace, type, genericTypes), genericTypes);
         }
 
 
@@ -169,14 +177,14 @@ namespace Mimp.SeeSharper.TypeResolver
             var old = ResolveTypesDelegate;
             ResolveTypesDelegate = old is null
                 ? resolveTypes
-                : (typeName, assembly, @namespace, type, genericTypes, resolvedTypes) => resolveTypes(typeName, assembly, @namespace, type, genericTypes, old(typeName, assembly, @namespace, type, genericTypes, resolvedTypes));
+                : (fullTypeName, assembly, @namespace, type, genericTypes, resolvedTypes) => resolveTypes(fullTypeName, assembly, @namespace, type, genericTypes, old(fullTypeName, assembly, @namespace, type, genericTypes, resolvedTypes));
         }
 
 
         #region Default delegates
 
 
-        protected static string? ChangePrimitiveTypeNames(string typeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes)
+        protected static string? ChangePrimitiveTypeNames(string fullTypeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes)
         {
             if (!string.IsNullOrWhiteSpace(@namespace) && !string.Equals(@namespace, "System", StringComparison.CurrentCultureIgnoreCase))
                 return type;
@@ -200,7 +208,7 @@ namespace Mimp.SeeSharper.TypeResolver
         }
 
 
-        protected static string? AddGenericGraveAccentKey(string typeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes)
+        protected static string? AddGenericGraveAccentKey(string fullTypeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes)
         {
             if (type is null)
                 return type;
@@ -210,7 +218,7 @@ namespace Mimp.SeeSharper.TypeResolver
                 var genNum = $"`{genericTypes.Length}";
                 if (!type.EndsWith(genNum))
                     if (type.Contains("`"))
-                        throw new TypeResolveException($@"Invalid number of generic types for ""{typeName}""");
+                        throw new TypeResolveException($@"Invalid number of generic types for ""{fullTypeName}""");
                     else
                         type = $"{type}{genNum}";
             }
@@ -218,7 +226,7 @@ namespace Mimp.SeeSharper.TypeResolver
         }
 
 
-        protected static IEnumerable<Type> ResolveQualifiedTypeName(string typeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes, IEnumerable<Type> resolvedTypes)
+        protected static IEnumerable<Type> ResolveQualifiedTypeName(string fullTypeName, string? assembly, string? @namespace, string? type, IEnumerable<Type>[] genericTypes, IEnumerable<Type> resolvedTypes)
         {
             if (string.IsNullOrWhiteSpace(type))
                 return Type.EmptyTypes;
