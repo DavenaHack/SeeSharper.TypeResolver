@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeResolve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeResolver", "Mimp.SeeSharper.TypeResolver\Mimp.SeeSharper.TypeResolver.csproj", "{039577BA-3F0D-42CD-B951-B0F132BD49C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mimp.SeeSharper.TypeResolver.Provide", "Mimp.SeeSharper.TypeResolver.Provide\Mimp.SeeSharper.TypeResolver.Provide.csproj", "{2A4A3C94-D5E3-489A-89B8-B215302418EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeResolver.Provide", "Mimp.SeeSharper.TypeResolver.Provide\Mimp.SeeSharper.TypeResolver.Provide.csproj", "{2A4A3C94-D5E3-489A-89B8-B215302418EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{55DB92C0-100A-446A-8BE8-BB018808738C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeProvider.Abstraction", "..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\Mimp.SeeSharper.TypeProvider.Abstraction.csproj", "{A339D284-6F61-4EB9-A5D6-E98DD5073E6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +31,16 @@ Global
 		{2A4A3C94-D5E3-489A-89B8-B215302418EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A4A3C94-D5E3-489A-89B8-B215302418EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A4A3C94-D5E3-489A-89B8-B215302418EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A339D284-6F61-4EB9-A5D6-E98DD5073E6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A339D284-6F61-4EB9-A5D6-E98DD5073E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A339D284-6F61-4EB9-A5D6-E98DD5073E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A339D284-6F61-4EB9-A5D6-E98DD5073E6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A339D284-6F61-4EB9-A5D6-E98DD5073E6D} = {55DB92C0-100A-446A-8BE8-BB018808738C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CD3E7ED-7695-4967-B5FF-BA127A176DB0}

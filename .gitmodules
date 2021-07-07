@@ -1,0 +1,4 @@
+[submodule "libs/TypeProvider"]
+	path = libs/TypeProvider
+	url = https://github.com/DavenaHack/SeeSharper.TypeProvider.git
+	branch = master

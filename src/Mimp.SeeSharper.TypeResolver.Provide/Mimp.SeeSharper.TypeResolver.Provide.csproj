@@ -1,18 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1;netstandard2.1;net48;net461</TargetFrameworks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-    
+
   <PropertyGroup Label="nullable">
     <Nullable>enable</Nullable>
     <DefineConstants Condition="'$(TargetFramework)' != 'netcoreapp2.1' and '$(TargetFramework)' != 'net48' and '$(TargetFramework)' != 'net461'">NullableAttributes;true</DefineConstants>
     <WarningsAsErrors>nullable</WarningsAsErrors>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <PackageReference Include="Mimp.SeeSharper.TypeProvider.Abstraction" Version="[1.0.0,]" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <ProjectReference Include="..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\Mimp.SeeSharper.TypeProvider.Abstraction.csproj" />
   </ItemGroup>
 
   <ItemGroup>
