@@ -35,7 +35,6 @@
     <Reference Include="Mimp.SeeSharper.TypeProvider.Abstraction">
       <HintPath>..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\bin\Debug\$(TargetFramework)\Mimp.SeeSharper.TypeProvider.Abstraction.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\Mimp.SeeSharper.TypeProvider.Abstraction.csproj" />
   </ItemGroup>
 
   <ItemGroup>
