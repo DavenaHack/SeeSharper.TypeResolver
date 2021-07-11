@@ -32,6 +32,9 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <Reference Include="Mimp.SeeSharper.TypeProvider.Abstraction">
+      <HintPath>..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\bin\Debug\$(TargetFramework)\Mimp.SeeSharper.TypeProvider.Abstraction.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\Mimp.SeeSharper.TypeProvider.Abstraction.csproj" />
   </ItemGroup>
 
@@ -40,8 +43,8 @@
     <ProjectReference Include="..\Mimp.SeeSharper.TypeResolver\Mimp.SeeSharper.TypeResolver.csproj" />
   </ItemGroup>
 
-  <Target Name="BuildDependencies" Condition="'$(Configuration)' == 'Debug'" BeforeTargets="BuildLink">
-    <Exec Command="dotnet build '..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\Mimp.SeeSharper.TypeProvider.Abstraction.csproj' -c $(Configuration)" />
+  <Target Name="ResolveDependencies" BeforeTargets="BeforeResolveReferences" Condition="'$(Configuration)' == 'Debug'">
+    <MSBuild Projects="..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\Mimp.SeeSharper.TypeProvider.Abstraction.csproj" Targets="Restore;Build" Properties="Configuration=Debug" />
   </Target>
 
 </Project>
