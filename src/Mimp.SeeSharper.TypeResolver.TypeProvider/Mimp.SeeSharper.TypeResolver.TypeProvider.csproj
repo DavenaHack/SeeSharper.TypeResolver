@@ -3,16 +3,16 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1;netstandard2.1;net48;net461</TargetFrameworks>
     <LangVersion>latest</LangVersion>
-    <AssemblyName>Mimp.SeeSharper.TypeResolver.Provide</AssemblyName>
+    <AssemblyName>Mimp.SeeSharper.TypeResolver.TypeProvider</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <AssemblyTitle>SeeSharper TypeResolver Provide</AssemblyTitle>
+    <AssemblyTitle>SeeSharper TypeResolver TypeProvider</AssemblyTitle>
     <Description>SeeSharper TypeResolver is a construct to resolve types.</Description>
     <Authors>SeeSharper Contributors</Authors>
     <Company>Mimp</Company>
-    <Product>SeeSharper TypeResolver Provide</Product>
+    <Product>SeeSharper TypeResolver TypeProvider</Product>
     <Copyright>Copyright © 2021 SeeSharper Contributors</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageId>Mimp.SeeSharper.TypeResolver.Provide</PackageId>
+    <PackageId>Mimp.SeeSharper.TypeResolver.TypeProvider</PackageId>
     <Version>1.0.0</Version>
     <PackageTags>seesharper;.net;type;resolve</PackageTags>
     <PackageProjectUrl>https://github.com/DavenaHack/SeeSharper.TypeResolver</PackageProjectUrl>
@@ -32,9 +32,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <Reference Include="Mimp.SeeSharper.TypeProvider.Abstraction">
-      <HintPath>..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\bin\Debug\$(TargetFramework)\Mimp.SeeSharper.TypeProvider.Abstraction.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider.Abstraction\Mimp.SeeSharper.TypeProvider.Abstraction.csproj" />
   </ItemGroup>
 
   <ItemGroup>

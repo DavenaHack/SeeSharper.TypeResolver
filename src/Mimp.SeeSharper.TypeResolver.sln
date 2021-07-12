@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeResolve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeResolver", "Mimp.SeeSharper.TypeResolver\Mimp.SeeSharper.TypeResolver.csproj", "{039577BA-3F0D-42CD-B951-B0F132BD49C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeResolver.Provide", "Mimp.SeeSharper.TypeResolver.Provide\Mimp.SeeSharper.TypeResolver.Provide.csproj", "{515DA7A2-1295-432D-813A-C4E0F9A1C790}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimp.SeeSharper.TypeResolver.TypeProvider", "Mimp.SeeSharper.TypeResolver.TypeProvider\Mimp.SeeSharper.TypeResolver.TypeProvider.csproj", "{515DA7A2-1295-432D-813A-C4E0F9A1C790}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{55DB92C0-100A-446A-8BE8-BB018808738C}"
 EndProject

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Mimp.SeeSharper.TypeResolver.Provide
+namespace Mimp.SeeSharper.TypeResolver.TypeProvider
 {
     /// <summary>
     /// Resolve the types by checking all providing types.
