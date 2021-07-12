@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mimp.SeeSharper.TypeProvider;
 using Mimp.SeeSharper.TypeResolver.Abstraction;
-using Mimp.SeeSharper.TypeResolver.Provide;
+using Mimp.SeeSharper.TypeResolver.TypeProvider;
 using System.Collections.Generic;
 
 namespace Mimp.SeeSharper.TypeResolver.Test

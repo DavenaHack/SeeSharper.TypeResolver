@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\libs\TypeProvider\src\Mimp.SeeSharper.TypeProvider\Mimp.SeeSharper.TypeProvider.csproj" />
     <ProjectReference Include="..\..\src\Mimp.SeeSharper.TypeResolver.Abstraction\Mimp.SeeSharper.TypeResolver.Abstraction.csproj" />
     <ProjectReference Include="..\..\src\Mimp.SeeSharper.TypeResolver.Provide\Mimp.SeeSharper.TypeResolver.Provide.csproj" />
+    <ProjectReference Include="..\..\src\Mimp.SeeSharper.TypeResolver.TypeProvider\Mimp.SeeSharper.TypeResolver.TypeProvider.csproj" />
     <ProjectReference Include="..\..\src\Mimp.SeeSharper.TypeResolver\Mimp.SeeSharper.TypeResolver.csproj" />
   </ItemGroup>
 
